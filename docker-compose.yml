@@ -6,21 +6,20 @@ volumes:
   postgres-data:
 
 services:
-  java-service:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+  #java-service:
+  #context: ./
+   #   dockerfile: Dockerfile
     
-    depends_on:
-      - postgres-db
+  #  depends_on:
+  #    - postgres-db
 
-    container_name: java-app
+   # container_name: java-app
 
-    ports:
-      - 8080:8080
+   # ports:
+   #   - 8080:8080
 
-    networks:
-      - interal
+  #  networks:
+  #    - interal
       
   postgres-db:
     image: postgres:17.6-alpine3.22
