@@ -26,6 +26,7 @@ public class UserAppServiceTest {
     private UserAppService userAppService;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void setUp() {
         userAppService = new UserAppService(userDao);
     }

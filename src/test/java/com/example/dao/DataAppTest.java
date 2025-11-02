@@ -1,6 +1,5 @@
 package com.example.dao;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +15,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.example.entity.User;
+import com.example.util.HibernateUtil;
 
 
 
@@ -33,6 +33,7 @@ public class DataAppTest {
     private SessionFactory sessionFactory;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void setUp() throws Exception {
         String url = postgreSQLContainer.getJdbcUrl();
 
@@ -47,21 +48,12 @@ public class DataAppTest {
             .addAnnotatedClass(com.example.entity.User.class);
         
         sessionFactory = config.buildSessionFactory();
-        setSessionFactoryInHibernateUtil(sessionFactory);
-
+        HibernateUtil.setSessionFactoryForTesting(sessionFactory);
         userDaoImpl = new UserDaoImpl();
     }
 
-    private void setSessionFactoryInHibernateUtil(SessionFactory sf) throws Exception {
-        Field field = com.example.util.HibernateUtil.class.getDeclaredField("sessionFactory");
-        field.setAccessible(true);
-        Field modifiersField = java.lang.reflect.Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~java.lang.reflect.Modifier.FINAL);
-        field.set(null, sf);
-    }
-
     @AfterEach
+    @SuppressWarnings("unused")
     void tearDown() {
         if (sessionFactory != null && !sessionFactory.isClosed()) {
             sessionFactory.close();
