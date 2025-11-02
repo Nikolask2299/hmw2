@@ -1,5 +1,6 @@
 D:\JAVA\intens\hmw2\src\main\java\com\example\App.java
-D:\JAVA\intens\hmw2\src\main\java\com\example\app\DataApp.java
-D:\JAVA\intens\hmw2\src\main\java\com\example\app\UserApp.java
+D:\JAVA\intens\hmw2\src\main\java\com\example\app\UserAppService.java
+D:\JAVA\intens\hmw2\src\main\java\com\example\dao\UserDao.java
+D:\JAVA\intens\hmw2\src\main\java\com\example\dao\UserDaoImpl.java
 D:\JAVA\intens\hmw2\src\main\java\com\example\entity\User.java
 D:\JAVA\intens\hmw2\src\main\java\com\example\util\HibernateUtil.java

@@ -1,13 +1,13 @@
 package com.example;
 
-import com.example.app.DataApp;
-import com.example.app.UserApp;
-import com.example.entity.User;
-
 import java.util.Scanner;
 
+import com.example.app.UserAppService;
+import com.example.dao.UserDaoImpl;
+import com.example.entity.User;
+
 public class App {
-    private static final UserApp userData = new DataApp();
+    private static final UserAppService userData = new UserAppService(new UserDaoImpl());
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -52,7 +52,7 @@ public class App {
 
         User user = new User(name, email, age);
         try {
-            userData.create(user);
+            userData.createUser(name, email, age);
             System.out.println("User created: " + user);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -80,28 +80,20 @@ public class App {
     private static void updateUser() {
         System.out.print("Enter user ID to update: ");
         Long id = Long.valueOf(scanner.nextLine());
-        var existingUserOpt = userData.findById(id);
-        if (existingUserOpt.isEmpty()) {
-            System.out.println("User not found.");
-            return;
-        }
-
-        User existingUser = existingUserOpt.get();
-        System.out.print("Enter new name (current: " + existingUser.getName() + "): ");
+        var existingUserOpt = userData.findById(id).get();
+        
+        System.out.print("Enter new name (current: " + existingUserOpt.getName() + "): ");
         String name = scanner.nextLine();
-        if (!name.isEmpty()) existingUser.setName(name);
 
-        System.out.print("Enter new email (current: " + existingUser.getEmail() + "): ");
+        System.out.print("Enter new email (current: " + existingUserOpt.getEmail() + "): ");
         String email = scanner.nextLine();
-        if (!email.isEmpty()) existingUser.setEmail(email);
 
-        System.out.print("Enter new age (current: " + existingUser.getAge() + "): ");
-        String ageStr = scanner.nextLine();
-        if (!ageStr.isEmpty()) existingUser.setAge(Integer.valueOf(ageStr));
+        System.out.print("Enter new age (current: " + existingUserOpt.getAge() + "): ");
+        Integer age = Integer.valueOf(scanner.nextLine());
 
         try {
-            userData.update(existingUser);
-            System.out.println("User updated: " + existingUser);
+            userData.updateUser(id, name, email, age);
+            System.out.println("User updated: " + existingUserOpt);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -111,7 +103,7 @@ public class App {
         System.out.print("Enter user ID to delete: ");
         Long id = Long.valueOf(scanner.nextLine());
         try {
-            userData.deleteById(id);
+            userData.deleteUser(id);
             System.out.println("User deleted.");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

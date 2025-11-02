@@ -1,5 +1,3 @@
 com\example\entity\User.class
 com\example\App.class
 com\example\util\HibernateUtil.class
-com\example\app\UserApp.class
-com\example\app\DataApp.class
