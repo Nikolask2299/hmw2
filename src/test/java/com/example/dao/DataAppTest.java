@@ -8,9 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -48,6 +48,7 @@ public class DataAppTest {
         
         sessionFactory = config.buildSessionFactory();
         setSessionFactoryInHibernateUtil(sessionFactory);
+
         userDaoImpl = new UserDaoImpl();
     }
 
@@ -68,7 +69,7 @@ public class DataAppTest {
     }
 
     @Test
-    void shouldSaveAndFindUserById(){
+    public void shouldSaveAndFindUserById(){
         User user = new User("Alice", "alice@test.com", 30);
 
         userDaoImpl.create(user);
@@ -82,13 +83,13 @@ public class DataAppTest {
     }
 
     @Test
-    void shouldReturnEmptyWhenUserNotFound(){
+    public void shouldReturnEmptyWhenUserNotFound(){
         Optional<User> foundUser = userDaoImpl.findById(999L);
         assertThat(foundUser).isEmpty();
     }
 
     @Test
-    void shouldFindAllUsers(){
+    public void shouldFindAllUsers(){
         userDaoImpl.create(new User("User1", "u1@test.com", 20));
         userDaoImpl.create(new User("User2", "u2@test.com", 25));
 
@@ -100,7 +101,7 @@ public class DataAppTest {
     }
 
     @Test
-    void shouldUpdateUser() {
+    public void shouldUpdateUser() {
         User user = new User("Old", "old@test.com", 40);
         userDaoImpl.create(user);
 
@@ -116,7 +117,7 @@ public class DataAppTest {
     }
 
     @Test
-    void shouldDeleteUser() {
+    public void shouldDeleteUser() {
         User user = new User("ToDelete", "del@test.com", 50);
         userDaoImpl.create(user);
 
